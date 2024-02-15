@@ -1,0 +1,27 @@
+{
+  "name": "pl.ideaspot.weather-app",
+  "displayName": "IdeaSpot Weather App",
+  "version": "0.0.1",
+  "description": "Get local weather",
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "IdeaSpot",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova-android": "^12.0.1",
+    "cordova-browser": "^7.0.0",
+    "cordova-plugin-geolocation": "^5.0.0"
+  },
+  "cordova": {
+    "platforms": [
+      "android",
+      "browser"
+    ],
+    "plugins": {
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "false"
+      }
+    }
+  }
+}

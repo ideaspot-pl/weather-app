@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="pl.ideaspot.weather-app" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>IdeaSpot Weather App</name>
+    <description>Weather App</description>
+    <author email="info@ideaspot.pl" href="https://ideaspot.pl">
+        IdeaSpot
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+</widget>
