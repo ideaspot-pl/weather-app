@@ -2,15 +2,19 @@
 // import HelloWorld from './components/HelloWorld.vue'
 // import TheWelcome from './components/TheWelcome.vue'
 
+const STATUS_IDLE = 'idle';
+const STATUS_GEOLOCATION = 'geolocation';
+const STATUS_API = 'api';
+
 export default {
   data() {
     return {
-      apiKey: "1453d962089c33d0c55be24fd6147c88",
+      apiKey: "YOUR_KEY",
       location: '',
       latitude: undefined,
       longitude: undefined,
       count: 0,
-      isProcessing: false,
+      status: STATUS_IDLE,
       forecasts: [],
       language: 'en',
     }
@@ -29,7 +33,7 @@ export default {
   },
   methods: {
     check() {
-      this.isProcessing = true;
+      this.status = STATUS_API;
       localStorage.setItem('location', this.location);
       fetch(this.forecastLink)
           .then((response) => response.json())
@@ -41,16 +45,18 @@ export default {
             }
           })
           .finally(() => {
-            this.isProcessing = false;
+            this.status = STATUS_IDLE;
           })
     },
 
     checkCoords() {
       if (navigator.geolocation) {
-        this.isProcessing = true;
+        this.status = STATUS_GEOLOCATION;
         navigator.geolocation.getCurrentPosition((pos) => {
           this.latitude = pos.coords.latitude;
           this.longitude = pos.coords.longitude;
+
+          this.status = STATUS_API;
 
           fetch(this.forecastLinkCoords)
               .then((response) => response.json())
@@ -65,11 +71,12 @@ export default {
                 }
               })
               .finally(() => {
-                this.isProcessing = false;
+                this.status = STATUS_IDLE;
               })
 
-        }, () => {
-          this.isProcessing = false;
+        }, (error) => {
+          console.error(error);
+          this.status = STATUS_IDLE;
         })
 
       }
@@ -85,13 +92,20 @@ export default {
 <template>
   <header>
     <form id="query-form" @submit.prevent="check">
-      <button type="button" :disabled="isProcessing" @click="checkCoords" id="check-coords">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 0c17.7 0 32 14.3 32 32V66.7C368.4 80.1 431.9 143.6 445.3 224H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H445.3C431.9 368.4 368.4 431.9 288 445.3V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V445.3C143.6 431.9 80.1 368.4 66.7 288H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H66.7C80.1 143.6 143.6 80.1 224 66.7V32c0-17.7 14.3-32 32-32zM128 256a128 128 0 1 0 256 0 128 128 0 1 0 -256 0zm128-80a80 80 0 1 1 0 160 80 80 0 1 1 0-160z"/></svg>
+      <button type="button" :disabled="status != 'idle'" @click="checkCoords" id="check-coords">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cursor" viewBox="0 0 16 16">
+          <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52z"/>
+        </svg>
       </button>
-      <input type="text" v-model="location" :disabled="isProcessing">
-      <button type="submit" :disabled="isProcessing" id="check">Check!</button>
+      <input type="text" v-model="location" :disabled="status != 'idle'">
+      <button type="submit" :disabled="status != 'idle'" id="check">Check!</button>
     </form>
   </header>
+
+  <div class="messages">
+    <div v-if="status == 'geolocation'" class="message">Getting location...</div>
+    <div v-if="status == 'api'" class="message">Processing...</div>
+  </div>
 
   <main id="weather-results-container">
     <div v-for="forecast in forecasts" :key="forecast.dt" class="weather-block">

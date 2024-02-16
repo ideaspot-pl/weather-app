@@ -1,5 +1,5 @@
 {
-  "name": "pl.ideaspot.weather-app",
+  "name": "pl.ideaspot.weather",
   "displayName": "IdeaSpot Weather App",
   "version": "0.0.1",
   "description": "Get local weather",
@@ -11,12 +11,12 @@
   "devDependencies": {
     "cordova-android": "^12.0.1",
     "cordova-browser": "^7.0.0",
-    "cordova-plugin-geolocation": "^5.0.0"
+    "cordova-plugin-geolocation": "^4.1.0"
   },
   "cordova": {
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ],
     "plugins": {
       "cordova-plugin-geolocation": {

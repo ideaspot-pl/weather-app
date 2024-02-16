@@ -1,0 +1,8 @@
+{
+  "androidAlias": "key0",
+  "androidAliasPassword": "TbTXkdSi",
+  "androidKeystore": "certificates/android.p12",
+  "androidKeystorePassword": "TbTXkdSi",
+  "androidPackageType": "bundle",
+  "release": "release"
+}

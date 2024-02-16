@@ -33,15 +33,22 @@ body {
 }
 
 #check-coords {
-    border: 0;
+    border: 1px solid #c0c0c0;
     background-color: white;
     padding: 0;
-    width: 25px;
+    width: 50px;
     height: 40px;
 }
 
 #check-coords svg {
-    width: 100%;
+    width: 20px;
+    height: 20px;
+}
+
+.messages {
+    text-align: center;
+    margin: 0 auto 2em auto;
+    max-width: 620px;
 }
 
 #weather-results-container {

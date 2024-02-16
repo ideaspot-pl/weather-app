@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint IdeaSpot Weather App --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "emulate": "vite build && cd cordova && cordova emulate android"
   },
   "dependencies": {
     "vue": "^3.4.15"
